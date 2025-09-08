@@ -73,46 +73,50 @@ class TscoatingComponent extends Component
         $this->tipod = $tipod;
     }
 
-    public function save()
-    {
-        foreach ($this->values as $equipo => $dias) {
-            foreach ($dias as $diaNombre => $turnos) {
-                $dia = $this->getDateForDia($diaNombre);
+public function save()
+{
+    foreach ($this->values as $equipo => $dias) {
+        foreach ($dias as $diaNombre => $turnos) {
+            $dia = $this->getDateForDia($diaNombre);
 
-                foreach ($turnos as $turno => $tipos) {
-                    foreach ($tipos as $tipo => $datos) {
-                        $updateData = [
-                            'planuser' => $datos['planuser'] ?? null,
-                            'cuser' => $datos['cuser'] ?? null,
-                            'typeuser' => $datos['typeuser'] ?? null,
-                            'priority' => $datos['priority'] ?? $this->getPriorityMap()[$turno][$tipo] ?? 1,
-                            'diaajustable' => $datos['diaajustable'] ?? $this->diaajustable[array_search($diaNombre, $this->diasSemana)] ?? $dia->day,
-                        ];
+            foreach ($turnos as $turno => $tipos) {
+                foreach ($tipos as $tipo => $datos) {
+                    $updateData = [
+                        'planuser' => $datos['planuser'] ?? null,
+                        'cuser' => $datos['cuser'] ?? null,
+                        'typeuser' => $datos['typeuser'] ?? null,
+                        'priority' => $datos['priority'] ?? $this->getPriorityMap()[$turno][$tipo] ?? 1,
+                        // Guardar diaajustable
+                        'diaajustable' => $datos['diaajustable'] ?? $this->diaajustable[array_search($diaNombre, $this->diasSemana)] ?? $dia->day,
+                        // Guardar secondarycoating si existe
+                        'secondarycoating' => $datos['secondarycoating'] ?? $this->secondarycoating[array_search($diaNombre, $this->diasSemana)] ?? 0,
+                    ];
 
-                        if ($this->editable) {
-                            $updateData = array_merge($updateData, [
-                                'plan' => $datos['plan'] ?? 0,
-                                'c' => $datos['c'] ?? 0,
-                                'type' => $datos['type'] ?? 0,
-                            ]);
-                        }
-
-                        Tscoating::updateOrCreate(
-                            [
-                                'equipo' => $equipo,
-                                'dia' => $dia,
-                                'turno' => $turno,
-                                'tipo' => $tipo,
-                            ],
-                            $updateData
-                        );
+                    if ($this->editable) {
+                        $updateData = array_merge($updateData, [
+                            'plan' => $datos['plan'] ?? 0,
+                            'c' => $datos['c'] ?? 0,
+                            'type' => $datos['type'] ?? 0,
+                        ]);
                     }
+
+                    Tscoating::updateOrCreate(
+                        [
+                            'equipo' => $equipo,
+                            'dia' => $dia,
+                            'turno' => $turno,
+                            'tipo' => $tipo,
+                        ],
+                        $updateData
+                    );
                 }
             }
         }
-
-        session()->flash('message', 'Datos guardados correctamente.');
     }
+
+    session()->flash('message', 'Datos guardados correctamente.');
+}
+
 
     private function getDiaNombre($date)
     {
