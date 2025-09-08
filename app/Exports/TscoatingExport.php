@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\Tscoating;
+use App\Models\tscoating;
 use Maatwebsite\Excel\Concerns\{
   FromArray,
   WithHeadings,
