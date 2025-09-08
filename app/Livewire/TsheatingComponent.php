@@ -72,7 +72,7 @@ class TsheatingComponent extends Component
   {
     $startOfWeek = Carbon::now()->startOfWeek();
 
-    $registros = Tsheating::whereBetween('dia', [
+    $registros = tsheating::whereBetween('dia', [
       $startOfWeek,
       $startOfWeek->copy()->addDays(5),
     ])->get();
