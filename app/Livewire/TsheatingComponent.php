@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\Tsheating;
+use App\Models\tsheating;
 use Illuminate\Support\Carbon;
 use App\Exports\TsheatingExport;
 use Maatwebsite\Excel\Facades\Excel;
