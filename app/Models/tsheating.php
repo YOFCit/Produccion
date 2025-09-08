@@ -18,5 +18,6 @@ class tsheating extends Model
     'c',
     'planuser',
     'cuser',
+    'diaajustable'
   ];
 }
