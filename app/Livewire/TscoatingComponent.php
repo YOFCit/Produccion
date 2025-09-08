@@ -82,7 +82,7 @@ public function save()
             foreach ($turnos as $turno => $tipos) {
                 foreach ($tipos as $tipo => $datos) {
 
-                    Tstranding::updateOrCreate(
+                    tscoating::updateOrCreate(
                         [
                             'equipo' => $equipo,
                             'dia' => $dia,
