@@ -147,4 +147,5 @@ public function save()
 
     session()->flash('message', 'Datos guardados correctamente.');
 }
+}
 
