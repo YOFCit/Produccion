@@ -25,6 +25,7 @@ return new class extends Migration
       $table->string('typeuser')->default(0)->nullable();
       $table->smallInteger('priority')->default(1);
       $table->timestamps();
+      $table->integer('diaajustable');
     });
   }
 
