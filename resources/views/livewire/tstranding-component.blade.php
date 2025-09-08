@@ -217,7 +217,7 @@ $currentPriority = $values[$equipo][$diasSemana[0]][$turno][$tipo]['priority']
   {{-- Plan --}}
   <td class="p-0" style="background-color: {{ $bgPlan }};">
     @if ($canEditPlan)
-    <input type="{{ in_array($tipo, ['MTTO','RMK']) ? 'text' : 'number' }}"
+    <input type="text"
       wire:model.defer="values.{{ $equipo }}.{{ $dia }}.{{ $turno }}.{{ $tipo }}.plan"
       class="form-control form-control-sm text-center p-0 input-plan"
       placeholder="{{ $placeholder }}"
@@ -231,7 +231,7 @@ $currentPriority = $values[$equipo][$diasSemana[0]][$turno][$tipo]['priority']
   {{-- C --}}
   <td class="p-0" style="background-color: {{ $bgC }};">
     @if ($canEditC)
-    <input type="{{ $isRMK ? 'text' : 'number' }}"
+    <input type="text"
       wire:model.defer="values.{{ $equipo }}.{{ $dia }}.{{ $turno }}.{{ $tipo }}.c"
       class="form-control form-control-sm text-center p-0 input-plan"
       placeholder="{{ $placeholder }}"
