@@ -73,18 +73,27 @@
                   Prioridad
                 </div>
               </th>
-            @foreach ($diasSemana as $index => $dia)
-                <th colspan="2" style="width:120px; background-color: {{ $colors['naranja'] }}; color:#fff;">
-                    <input 
-                        type="number" 
-                        name="diaajustable[{{ $index }}]" 
-                        value="{{ $dia }}" 
-                        min="1" 
-                        max="31" 
-                        class="form-control text-center fw-semibold"
-                    >
-                </th>
-            @endforeach
+@foreach ($diasSemana as $index => $dia)
+    <th colspan="2" style="width:120px; background-color: {{ $colors['naranja'] }}; color:#fff;">
+        <div class="d-flex flex-column align-items-center">
+            {{-- Nombre del día siempre visible --}}
+            <span class="fw-bold">{{ $dia }}</span>
+
+            {{-- Input solo si es editable --}}
+            @if($editable)
+                <input 
+                    type="number" 
+                    wire:model="values['diaajustable'][{{ $index }}]" 
+                    min="1" 
+                    max="31" 
+                    class="form-control text-center fw-semibold mt-1"
+                    style="width:70px;"
+                >
+            @endif
+        </div>
+    </th>
+@endforeach
+
             </tr>
             <tr style="background-color: {{ $colors['azulClaro'] }}; color:#fff;">
               @foreach ($diasSemana as $dia)
