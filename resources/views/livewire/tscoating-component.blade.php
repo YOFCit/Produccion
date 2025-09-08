@@ -86,10 +86,7 @@ $defaultRMK = $colors['rmk'];
 @foreach($diasSemana as $index => $dia)
     <th colspan="2" style="width:75px; background-color: {{ $colors['header'] }}; color:#fff;">
         <div class="d-flex flex-column align-items-center">
-            {{-- Nombre del día --}}
             <span class="fw-bold">{{ $dia }}</span>
-
-            {{-- Número del día --}}
             @if($editable)
                 <input 
                     type="number" 
@@ -105,7 +102,6 @@ $defaultRMK = $colors['rmk'];
         </div>
     </th>
 @endforeach
-
 </tr>
 <tr>
   @foreach($diasSemana as $dia)
