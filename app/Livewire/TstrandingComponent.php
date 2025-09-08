@@ -72,7 +72,7 @@ class TstrandingComponent extends Component
   {
     $startOfWeek = Carbon::now()->startOfWeek();
 
-    $registros = Tstranding::whereBetween('dia', [
+    $registros = tstranding::whereBetween('dia', [
       $startOfWeek,
       $startOfWeek->copy()->addDays(5),
     ])->get();
