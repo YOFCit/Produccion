@@ -18,6 +18,8 @@ class TsheatingComponent extends Component
   public $editable = false;
   public $tipod;
   public $isAdmin = false;
+  public $diaajustable = [];
+
 
   public function render()
   {
@@ -68,77 +70,80 @@ class TsheatingComponent extends Component
     ];
   }
 
-  public function mount($editable, $tipod)
-  {
+public function mount($editable, $tipod)
+{
     $startOfWeek = Carbon::now()->startOfWeek();
 
     $registros = tsheating::whereBetween('dia', [
-      $startOfWeek,
-      $startOfWeek->copy()->addDays(5),
+        $startOfWeek,
+        $startOfWeek->copy()->addDays(5),
     ])->get();
 
     foreach ($registros as $rec) {
-      $diaNombre = $this->getDiaNombre($rec->dia);
-      $this->values[$rec->equipo][$diaNombre][$rec->turno][$rec->tipo] = [
-        'plan' => $rec->plan,
-        'c' => $rec->c,
-        'planuser' => $rec->planuser ?? 0,
-        'cuser' => $rec->cuser ?? 0,
-        'priority' => $rec->priority ?? $this->getPriorityMap()[$rec->turno][$rec->tipo] ?? 1,
-      ];
+        $diaNombre = $this->getDiaNombre($rec->dia);
+        $this->values[$rec->equipo][$diaNombre][$rec->turno][$rec->tipo] = [
+            'plan' => $rec->plan,
+            'c' => $rec->c,
+            'planuser' => $rec->planuser ?? 0,
+            'cuser' => $rec->cuser ?? 0,
+            'priority' => $rec->priority ?? $this->getPriorityMap()[$rec->turno][$rec->tipo] ?? 1,
+            'diaajustable' => $rec->diaajustable ?? $this->getDateForDia($diaNombre)->day, // 👈 agregado
+        ];
     }
 
     // Inicializar valores faltantes
     foreach ($this->equipos as $equipo) {
-      foreach ($this->diasSemana as $dia) {
-        foreach ($this->turnos as $turno) {
-          foreach ($this->tipos as $tipo) {
-            if (!isset($this->values[$equipo][$dia][$turno][$tipo])) {
-              $this->values[$equipo][$dia][$turno][$tipo] = [
-                'plan' => 0,
-                'c' => 0,
-                'planuser' => 0,
-                'cuser' => 0,
-                'priority' => $this->getPriorityMap()[$turno][$tipo] ?? 1,
-              ];
+        foreach ($this->diasSemana as $dia) {
+            foreach ($this->turnos as $turno) {
+                foreach ($this->tipos as $tipo) {
+                    if (!isset($this->values[$equipo][$dia][$turno][$tipo])) {
+                        $this->values[$equipo][$dia][$turno][$tipo] = [
+                            'plan' => 0,
+                            'c' => 0,
+                            'planuser' => 0,
+                            'cuser' => 0,
+                            'priority' => $this->getPriorityMap()[$turno][$tipo] ?? 1,
+                            'diaajustable' => $this->getDateForDia($dia)->day, // 👈 agregado
+                        ];
+                    }
+                }
             }
-          }
         }
-      }
     }
 
     $this->editable = $editable;
     $this->tipod = $tipod;
     $this->isAdmin = $tipod === 'admin';
-  }
+}
 
-  public function save()
-  {
+public function save()
+{
     foreach ($this->values as $equipo => $dias) {
-      foreach ($dias as $diaNombre => $turnos) {
-        $dia = $this->getDateForDia($diaNombre);
-        foreach ($turnos as $turno => $tipos) {
-          foreach ($tipos as $tipo => $datos) {
-            Tsheating::updateOrCreate(
-              [
-                'equipo' => $equipo,
-                'dia' => $dia,
-                'turno' => $turno,
-                'tipo' => $tipo,
-              ],
-              [
-                'plan' => $datos['plan'] ?? 0,
-                'c' => $datos['c'] ?? 0,
-                'planuser' => $datos['planuser'] ?? null,
-                'cuser' => $datos['cuser'] ?? null,
-                'priority' => $datos['priority'] ?? $this->getPriorityMap()[$turno][$tipo] ?? 1,
-              ]
-            );
-          }
+        foreach ($dias as $diaNombre => $turnos) {
+            $dia = $this->getDateForDia($diaNombre);
+            foreach ($turnos as $turno => $tipos) {
+                foreach ($tipos as $tipo => $datos) {
+                    Tsheating::updateOrCreate(
+                        [
+                            'equipo' => $equipo,
+                            'dia' => $dia,
+                            'turno' => $turno,
+                            'tipo' => $tipo,
+                        ],
+                        [
+                            'plan' => $datos['plan'] ?? 0,
+                            'c' => $datos['c'] ?? 0,
+                            'planuser' => $datos['planuser'] ?? null,
+                            'cuser' => $datos['cuser'] ?? null,
+                            'priority' => $datos['priority'] ?? $this->getPriorityMap()[$turno][$tipo] ?? 1,
+                            'diaajustable' => $datos['diaajustable'] ?? $dia->day, // 👈 agregado
+                        ]
+                    );
+                }
+            }
         }
-      }
     }
 
     session()->flash('message', 'Datos guardados correctamente.');
-  }
+}
 }
