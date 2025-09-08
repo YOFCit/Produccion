@@ -22,6 +22,7 @@ return new class extends Migration
       $table->string('planuser')->default(0)->nullable();
       $table->string('cuser')->default(0)->nullable();
       $table->smallInteger('priority')->default(1);
+      $table->integer('diaajustable');
       $table->timestamps();
     });
   }
