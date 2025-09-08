@@ -16,6 +16,7 @@ class TstrandingComponent extends Component
   public $priorities = ['1', '2', '3'];
   public $diasSemana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
   public $values = [];
+  public $diaajustable = [];
   public $editable = false;
   public $tipod;
 
@@ -107,6 +108,9 @@ class TstrandingComponent extends Component
           }
         }
       }
+    }
+    foreach ($this->diasSemana as $index => $dia) {
+        $this->diaajustable[$index] = $this->getDateForDia($dia)->day;
     }
 
     $this->editable = $editable;
