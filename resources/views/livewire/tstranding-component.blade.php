@@ -73,9 +73,18 @@
                   Prioridad
                 </div>
               </th>
-              @foreach ($diasSemana as $dia)
-              <th colspan="2" style="width:120px; background-color: {{ $colors['naranja'] }}; color:#fff;">{{ $dia }}</th>
-              @endforeach
+            @foreach ($diasSemana as $index => $dia)
+                <th colspan="2" style="width:120px; background-color: {{ $colors['naranja'] }}; color:#fff;">
+                    <input 
+                        type="number" 
+                        name="diaajustable[{{ $index }}]" 
+                        value="{{ $dia }}" 
+                        min="1" 
+                        max="31" 
+                        class="form-control text-center fw-semibold"
+                    >
+                </th>
+            @endforeach
             </tr>
             <tr style="background-color: {{ $colors['azulClaro'] }}; color:#fff;">
               @foreach ($diasSemana as $dia)
