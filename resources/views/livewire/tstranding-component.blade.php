@@ -79,11 +79,11 @@ $coloresRMK = [
             {{-- Nombre del día --}}
             <span class="fw-bold">{{ $dia }}</span>
 
-            {{-- Número del día: editable o fijo --}}
+            {{-- Número del día --}}
             @if($editable)
                 <input 
                     type="number" 
-                    wire:model="values.diaajustable.{{ $index }}" 
+                    wire:model="diaajustable.{{ $index }}" 
                     min="1" 
                     max="31" 
                     class="form-control text-center fw-semibold mt-1"
@@ -91,7 +91,7 @@ $coloresRMK = [
                 >
             @else
                 <span class="mt-1">
-                    {{ $values['diaajustable'][$index] ?? '' }}
+                    {{ $diaajustable[$index] ?? '' }}
                 </span>
             @endif
         </div>
