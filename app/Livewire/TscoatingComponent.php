@@ -27,7 +27,7 @@ class TscoatingComponent extends Component
   {
     $startOfWeek = Carbon::now()->startOfWeek();
 
-    $registros = Tscoating::whereBetween('dia', [
+    $registros = tscoating::whereBetween('dia', [
       $startOfWeek->copy(),
       $startOfWeek->copy()->addDays(6)
     ])->get();
