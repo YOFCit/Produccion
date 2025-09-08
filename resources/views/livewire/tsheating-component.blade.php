@@ -82,9 +82,23 @@
               </th>
 
 
-              @foreach ($diasSemana as $dia)
-              <th colspan="2" style="width: 120px; background-color: rgb(153,102,255); color: #fff;">{{ $dia }}</th>
-              @endforeach
+@foreach ($diasSemana as $index => $dia)
+    <th colspan="2" style="width: 120px; background-color: rgb(153,102,255); color: #fff;">
+        {{ $dia }}
+        @if($editable)
+            <input 
+                type="number" 
+                wire:model="diaajustable.{{ $index }}" 
+                min="1" 
+                max="31" 
+                class="form-control form-control-sm text-center mt-1"
+            >
+        @else
+            <span class="d-block text-center mt-1">{{ $diaajustable[$index] ?? \Carbon\Carbon::now()->startOfWeek()->addDays($index)->day }}</span>
+        @endif
+    </th>
+@endforeach
+
             </tr>
             <tr style="background-color: #B39DDB; color: #fff;">
               @foreach ($diasSemana as $dia)
