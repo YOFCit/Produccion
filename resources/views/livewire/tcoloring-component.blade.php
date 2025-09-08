@@ -87,14 +87,14 @@
                 <td class="p-0">
                   <div class="d-flex flex-column gap-1">
                     <input
-                      type="number"
+                      type="text"
                       wire:model.defer="values.{{ $equipo }}.{{ $dia }}.{{ $turno }}.{{ $fibra }}.plan"
                       class="form-control form-control-sm text-center p-1"
                       min="0"
                       placeholder="0"
                       @if(!$editable) disabled @endif />
                     <input
-                      type="number"
+                      type="text"
                       wire:model.defer="values.{{ $equipo }}.{{ $dia }}.{{ $turno }}.{{ $fibra }}.planuser"
                       class="form-control form-control-sm text-center p-1"
                       placeholder="0" />
@@ -105,13 +105,13 @@
                 <td class="p-0">
                   <div class="d-flex flex-column gap-1">
                     <input
-                      type="number"
+                      type="text"
                       wire:model.defer="values.{{ $equipo }}.{{ $dia }}.{{ $turno }}.{{ $fibra }}.c"
                       class="form-control form-control-sm text-center p-1"
                       min="0"
                       @if(!$editable) disabled @endif />
                     <input
-                      type="number"
+                      type="text"
                       wire:model.defer="values.{{ $equipo }}.{{ $dia }}.{{ $turno }}.{{ $fibra }}.cuser"
                       class="form-control form-control-sm text-center p-1"
                       placeholder="0" />
@@ -122,13 +122,13 @@
                 <td class="p-0">
                   <div class="d-flex flex-column gap-1">
                     <input
-                      type="number"
+                      type="text"
                       wire:model.defer="values.{{ $equipo }}.{{ $dia }}.{{ $turno }}.{{ $fibra }}.type"
                       class="form-control form-control-sm text-center p-1"
                       min="0"
                       @if(!$editable) disabled @endif />
                     <input
-                      type="number"
+                      type="text"
                       wire:model.defer="values.{{ $equipo }}.{{ $dia }}.{{ $turno }}.{{ $fibra }}.typeuser"
                       class="form-control form-control-sm text-center p-1"
                       placeholder="0" />
