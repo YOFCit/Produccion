@@ -13,13 +13,13 @@ return new class extends Migration
   {
     Schema::create('tcolorings', function (Blueprint $table) {
       $table->id();
-      $table->enum('equipo', ['CL-01', 'CL-02', 'CL-03', 'CL-04', 'CL-05']);
-      $table->integer('turno');
-      $table->enum('dias', ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']);
-      $table->string('tipofibra');
-      $table->string('plan')->default(0);
-      $table->string('c')->default(0);
-      $table->string('type')->default(0);
+      $table->enum('equipo', ['CL-01', 'CL-02', 'CL-03', 'CL-04', 'CL-05'])->nullable();
+      $table->integer('turno')->nullable();
+      $table->enum('dias', ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'])->nullable();
+      $table->string('tipofibra')->nullable();
+      $table->string('plan')->default(0)->nullable();
+      $table->string('c')->default(0)->nullable();
+      $table->string('type')->default(0)->nullable();
       $table->string('planuser')->default(0)->nullable();
       $table->string('cuser')->default(0)->nullable();
       $table->string('typeuser')->default(0)->nullable();

@@ -110,42 +110,41 @@ class TstrandingComponent extends Component
       }
     }
     foreach ($this->diasSemana as $index => $dia) {
-        $this->diaajustable[$index] = $this->getDateForDia($dia)->day;
+      $this->diaajustable[$index] = $this->getDateForDia($dia)->day;
     }
 
     $this->editable = $editable;
     $this->tipod = $tipod;
   }
 
-public function save()
-{
-    foreach ($this->equipos as $equipo) {
-        foreach ($this->diasSemana as $index => $diaNombre) {
-            $dia = $this->getDateForDia($diaNombre);
-
-            // Tomamos los datos de cualquier turno/tipo, por ejemplo el primero
-            $primerTurno = $this->turnos[0];
-            $primerTipo = $this->tipos[0];
-            $datos = $this->values[$equipo][$diaNombre][$primerTurno][$primerTipo] ?? [];
-
-            tstranding::updateOrCreate(
-                [
-                    'equipo' => $equipo,
-                    'dia' => $dia,
-                ],
-                [
-                    'plan' => $datos['plan'] ?? 0,
-                    'c' => $datos['c'] ?? 0,
-                    'planuser' => $datos['planuser'] ?? null,
-                    'cuser' => $datos['cuser'] ?? null,
-                    'priority' => $datos['priority'] ?? $this->getPriorityMap()[$primerTurno][$primerTipo] ?? 1,
-                    'diaajustable' => $datos['diaajustable'] ?? $this->diaajustable[$index] ?? $dia->day,
-                ]
+  public function save()
+  {
+    foreach ($this->values as $equipo => $dias) {
+      foreach ($dias as $diaNombre => $turnos) {
+        $dia = $this->getDateForDia($diaNombre);
+        foreach ($turnos as $turno => $tipos) {
+          foreach ($tipos as $tipo => $datos) {
+            Tstranding::updateOrCreate(
+              [
+                'equipo' => $equipo,
+                'dia' => $dia,
+                'turno' => $turno,
+                'tipo' => $tipo,
+              ],
+              [
+                'plan' => $datos['plan'] ?? 0,
+                'c' => $datos['c'] ?? 0,
+                'planuser' => $datos['planuser'] ?? null,
+                'cuser' => $datos['cuser'] ?? null,
+                'priority' => $datos['priority'] ?? $this->getPriorityMap()[$turno][$tipo] ?? 1,
+                'diaajustable' => $datos['diaajustable'] ?? $dia->day,
+              ]
             );
+          }
         }
+      }
     }
 
     session()->flash('message', 'Datos guardados correctamente.');
+  }
 }
-}
-
