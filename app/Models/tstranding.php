@@ -19,5 +19,6 @@ class Tstranding extends Model
     'c',
     'planuser',
     'cuser',
+    'diaajustable'
   ];
 }
