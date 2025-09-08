@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\Tscoating;
+use App\Models\tscoating;
 use Illuminate\Support\Carbon;
 
 class TscoatingComponent extends Component
@@ -26,7 +26,7 @@ class TscoatingComponent extends Component
     $startOfWeek = Carbon::now()->startOfWeek();
     $endOfWeek = $startOfWeek->copy()->addDays(5);
 
-    $registros = Tscoating::whereBetween('dia', [
+    $registros = tscoating::whereBetween('dia', [
       $startOfWeek->format('Y-m-d'),
       $endOfWeek->format('Y-m-d')
     ])->get();
