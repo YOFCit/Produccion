@@ -117,34 +117,34 @@ class TstrandingComponent extends Component
     $this->tipod = $tipod;
   }
 
-  public function save()
-  {
-    foreach ($this->values as $equipo => $dias) {
-      foreach ($dias as $diaNombre => $turnos) {
-        $dia = $this->getDateForDia($diaNombre);
-        foreach ($turnos as $turno => $tipos) {
-          foreach ($tipos as $tipo => $datos) {
+public function save()
+{
+    foreach ($this->equipos as $equipo) {
+        foreach ($this->diasSemana as $index => $diaNombre) {
+            $dia = $this->getDateForDia($diaNombre);
+
+            // Tomamos los datos de cualquier turno/tipo, por ejemplo el primero
+            $primerTurno = $this->turnos[0];
+            $primerTipo = $this->tipos[0];
+            $datos = $this->values[$equipo][$diaNombre][$primerTurno][$primerTipo] ?? [];
+
             tstranding::updateOrCreate(
                 [
                     'equipo' => $equipo,
-                    'dia' => $dia,      // columna principal
-                    'turno' => $turno,
-                    'tipo' => $tipo,
+                    'dia' => $dia,
                 ],
                 [
                     'plan' => $datos['plan'] ?? 0,
                     'c' => $datos['c'] ?? 0,
                     'planuser' => $datos['planuser'] ?? null,
                     'cuser' => $datos['cuser'] ?? null,
-                    'priority' => $datos['priority'] ?? $this->getPriorityMap()[$turno][$tipo] ?? 1,
-                    'diaajustable' => $datos['diaajustable'] ?? $dia->day, // <-- campo independiente
+                    'priority' => $datos['priority'] ?? $this->getPriorityMap()[$primerTurno][$primerTipo] ?? 1,
+                    'diaajustable' => $datos['diaajustable'] ?? $this->diaajustable[$index] ?? $dia->day,
                 ]
             );
-          }
         }
-      }
     }
 
     session()->flash('message', 'Datos guardados correctamente.');
-  }
 }
+
