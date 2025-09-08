@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\Tstranding;
+use App\Models\tstranding;
 use Illuminate\Support\Carbon;
 use App\Exports\TstrandingExport;
 use Maatwebsite\Excel\Facades\Excel;
