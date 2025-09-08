@@ -20,5 +20,6 @@ class Tscoating extends Model
     'planuser',
     'cuser',
     'typeuser',
+    'diaajustable'
   ];
 }
