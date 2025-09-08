@@ -8,11 +8,11 @@ class TcoloringController extends Controller
 {
   public function index()
   {
-    return view('Layouts.Lcoloring', ['editable' => false]);
+    return view('layouts.Lcoloring', ['editable' => false]);
   }
 
   public function indexAdmin()
   {
-    return view('Layouts.Lcoloring', ['editable' => true]);
+    return view('layouts.Lcoloring', ['editable' => true]);
   }
 }
