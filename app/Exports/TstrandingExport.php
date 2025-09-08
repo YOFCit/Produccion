@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\Tstranding;
+use App\Models\tstranding;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
