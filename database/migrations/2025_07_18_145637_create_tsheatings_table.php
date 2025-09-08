@@ -23,6 +23,7 @@ return new class extends Migration
       $table->string('cuser')->nullable();
       $table->smallInteger('priority')->default(1);
       $table->timestamps();
+      $table->integer('dia');
     });
   }
 
