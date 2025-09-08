@@ -75,12 +75,14 @@ class TscoatingComponent extends Component
 
 public function save()
 {
-    foreach ($this->values as $equipo => $dias) {
-        foreach ($dias as $diaNombre => $turnos) {
+    foreach ($this->equipos as $equipo) {
+        foreach ($this->diasSemana as $diaNombre) {
             $dia = $this->getDateForDia($diaNombre);
 
-            foreach ($turnos as $turno => $tipos) {
-                foreach ($tipos as $tipo => $datos) {
+            // Consolidamos los datos por día, turno y tipo
+            foreach ($this->turnos as $turno) {
+                foreach ($this->tipos as $tipo) {
+                    $datos = $this->values[$equipo][$diaNombre][$turno][$tipo] ?? [];
 
                     tscoating::updateOrCreate(
                         [
@@ -105,6 +107,7 @@ public function save()
 
     session()->flash('message', 'Datos guardados correctamente.');
 }
+
 
 
     private function getDiaNombre($date)
