@@ -9,11 +9,11 @@ class TstrandingController extends Controller
 
   public function index()
   {
-    return view('Layouts.Lstranding', ['editable' => false], ['tipod' => 'text']);
+    return view('layouts.Lstranding', ['editable' => false], ['tipod' => 'text']);
   }
 
   public function indexAdmin()
   {
-    return view('Layouts.Lstranding', ['editable' => true], ['tipod' => 'text']);
+    return view('layouts.Lstranding', ['editable' => true], ['tipod' => 'text']);
   }
 }
