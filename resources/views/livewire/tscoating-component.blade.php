@@ -194,7 +194,7 @@
 
               <td class="p-0" style="background-color: {{ $bgPlan }};">
                 @if($canEditPlan && !$isNig)
-                <input type="{{ $isRMK || $isMtto ? 'text' : 'number' }}"
+                <input type="text"
                   wire:model.defer="values.{{ $equipo }}.{{ $dia }}.{{ $turno }}.{{ $tipo }}.plan"
                   class="form-control form-control-sm text-center p-0 input-clean"
                   placeholder="{{ $placeholder }}"
