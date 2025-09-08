@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\Tscoating;
+use App\Models\tscoating;
 use Illuminate\Support\Carbon;
 use App\Exports\TscoatingExport;
 use Maatwebsite\Excel\Facades\Excel;
