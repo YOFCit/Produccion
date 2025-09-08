@@ -124,21 +124,21 @@ class TstrandingComponent extends Component
         $dia = $this->getDateForDia($diaNombre);
         foreach ($turnos as $turno => $tipos) {
           foreach ($tipos as $tipo => $datos) {
-            Tstranding::updateOrCreate(
-              [
-                'equipo' => $equipo,
-                'dia' => $dia,
-                'turno' => $turno,
-                'tipo' => $tipo,
-              ],
-              [
-                'plan' => $datos['plan'] ?? 0,
-                'c' => $datos['c'] ?? 0,
-                'planuser' => $datos['planuser'] ?? null,
-                'cuser' => $datos['cuser'] ?? null,
-                'priority' => $datos['priority'] ?? $this->getPriorityMap()[$turno][$tipo] ?? 1,
-                'diaajustable' => $datos['diaajustable'] ?? $dia->day, // 👈 agregado
-              ]
+            tstranding::updateOrCreate(
+                [
+                    'equipo' => $equipo,
+                    'dia' => $dia,      // columna principal
+                    'turno' => $turno,
+                    'tipo' => $tipo,
+                ],
+                [
+                    'plan' => $datos['plan'] ?? 0,
+                    'c' => $datos['c'] ?? 0,
+                    'planuser' => $datos['planuser'] ?? null,
+                    'cuser' => $datos['cuser'] ?? null,
+                    'priority' => $datos['priority'] ?? $this->getPriorityMap()[$turno][$tipo] ?? 1,
+                    'diaajustable' => $datos['diaajustable'] ?? $dia->day, // <-- campo independiente
+                ]
             );
           }
         }
