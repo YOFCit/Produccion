@@ -85,6 +85,7 @@ class TstrandingComponent extends Component
         'planuser' => $rec->planuser ?? 0,
         'cuser' => $rec->cuser ?? 0,
         'priority' => $rec->priority ?? $this->getPriorityMap()[$rec->turno][$rec->tipo] ?? 1,
+        'diaajustable' => $rec->diaajustable ?? $this->getDateForDia($diaNombre)->day, // 👈 agregado
       ];
     }
 
@@ -100,6 +101,7 @@ class TstrandingComponent extends Component
                 'planuser' => 0,
                 'cuser' => 0,
                 'priority' => $this->getPriorityMap()[$turno][$tipo] ?? 1,
+                'diaajustable' => $this->getDateForDia($dia)->day, // 👈 agregado
               ];
             }
           }
@@ -110,7 +112,6 @@ class TstrandingComponent extends Component
     $this->editable = $editable;
     $this->tipod = $tipod;
   }
-
 
   public function save()
   {
@@ -132,6 +133,7 @@ class TstrandingComponent extends Component
                 'planuser' => $datos['planuser'] ?? null,
                 'cuser' => $datos['cuser'] ?? null,
                 'priority' => $datos['priority'] ?? $this->getPriorityMap()[$turno][$tipo] ?? 1,
+                'diaajustable' => $datos['diaajustable'] ?? $dia->day, // 👈 agregado
               ]
             );
           }
