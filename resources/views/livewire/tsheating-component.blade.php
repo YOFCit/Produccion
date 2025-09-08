@@ -151,7 +151,7 @@
               <td class="p-0" style="background-color: {{ $colors['white'] }};">
                 <div class="d-flex flex-column justify-content-center align-items-center text-center text-xs px-1 py-1">
                   @if ($editable)
-                  <input type="number"
+                  <input type="text"
                     wire:model="values.{{ $equipo }}.{{ $diasSemana[0] }}.{{ $turno }}.{{ $tipo }}.priority"
                     class="form-control form-control-sm text-center p-0 mb-1"
                     min="1" max="9"
