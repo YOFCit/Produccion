@@ -16,18 +16,33 @@
     </div>
   </div>
   <style>
-    .input-clean {
+    .input-plan {
+      background-color: transparent;
+      /* respeta color de celda */
       height: 30px;
       line-height: 1;
       padding: 0;
       font-size: 0.8rem;
-      border: none;
       text-align: center;
       width: 100%;
+      border: 1px dashed rgba(0, 0, 0, 0.3);
+      /* línea punteada visible siempre */
+      border-radius: 4px;
+      transition: all 0.2s ease-in-out;
+    }
+
+    /* Cuando el usuario hace clic para escribir */
+    .input-plan:focus {
+      border: 2px solid #0d6efd;
+      /* azul bootstrap */
       outline: none;
-      color: #000;
+      box-shadow: 0 0 6px 2px rgba(13, 110, 253, 0.6);
+      /* glow azul */
+      background-color: rgba(255, 255, 255, 0.3);
+      /* leve transparencia encima */
     }
   </style>
+
   @php
   /* ==========================
   PALETA DE COLORES
