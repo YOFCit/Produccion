@@ -9,34 +9,23 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
-use PhpOffice\PhpSpreadsheet\Style\Font;
-use PhpOffice\PhpSpreadsheet\Style\Border;
-use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
 class ExcelController extends Controller
 {
-  public function index()
+  public function index($admin = null)
   {
     $excelData = [];
     $excelFileUrl = null;
 
-    // Usar storage_path en lugar de Storage::path
+    $isAdmin = ($admin === 'admin'); // bandera para la vista
+
     $jsonPath = storage_path('app/public/excels/data.json');
     $excelPath = storage_path('app/public/excels/plan_produccion.xlsx');
 
-    // Primero intentar cargar desde el JSON de Luckysheet
     if (file_exists($jsonPath)) {
       $jsonData = file_get_contents($jsonPath);
       $excelData = json_decode($jsonData, true) ?? [];
-    }
-    // Si no existe JSON, cargar desde Excel
-    elseif (file_exists($excelPath)) {
-      // Crear directorio si no existe
-      $directory = dirname($excelPath);
-      if (!is_dir($directory)) {
-        mkdir($directory, 0755, true);
-      }
-
+    } elseif (file_exists($excelPath)) {
       try {
         $spreadsheet = IOFactory::load($excelPath);
         $excelData = $this->convertExcelToLuckysheet($spreadsheet);
@@ -45,14 +34,14 @@ class ExcelController extends Controller
       }
     }
 
-    // Generar URL
     if (file_exists($excelPath)) {
       $excelFileUrl = Storage::url('excels/plan_produccion.xlsx');
     }
 
     return view('excel.index', [
       'excelData' => $excelData,
-      'excelFileUrl' => $excelFileUrl
+      'excelFileUrl' => $excelFileUrl,
+      'isAdmin' => $isAdmin,
     ]);
   }
 

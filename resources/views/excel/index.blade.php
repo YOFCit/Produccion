@@ -21,10 +21,12 @@
   {{-- HEADER --}}
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h2 class="fw-bold text-primary">📊 Plan de Producción</h2>
+    @if($isAdmin)
     <div>
       <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#uploadModal">📁 Upload / Update Excel</button>
       <button id="saveBtn" class="btn btn-success btn-sm">💾 Save Changes</button>
     </div>
+    @endif
   </div>
 
   {{-- CONTENEDOR --}}
@@ -32,7 +34,6 @@
 
 </div>
 
-{{-- MODAL UPLOAD --}}
 <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
